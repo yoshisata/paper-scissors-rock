@@ -81,19 +81,20 @@ class PaperScissorsRockGame:
         """Prompt the user to enter the number of rounds and confirms if the input is greater than MAX_ROUNDS amount."""
 
         while True:
-            rounds = int(input('Enter the number of rounds: '))
+            try:
+                rounds = int(input('Enter the number of rounds: '))
 
-            if rounds > cls.MAX_ROUNDS:
-                confirm = int(input(
-                    f'You entered more than {cls.MAX_ROUNDS} rounds. '
-                    f'Do you confirm? (1 - Yes, 2 - No): ',
-                ))
+                if rounds > cls.MAX_ROUNDS:
+                    confirm = input(
+                        f'You entered more than {cls.MAX_ROUNDS} rounds. '
+                        f'Do you confirm? (Y - Yes, Any other key to start again): ',
+                    ).strip().lower()
 
-                if confirm == 1:
+                    if confirm == 'y':
+                        return rounds
+
+                else:
                     return rounds
 
-                if confirm not in (1, 2):
-                    logging.warning('Invalid input. Please enter 1 to confirm or 2 to start again.')
-
-            else:
-                return rounds
+            except ValueError:
+                logging.warning("Invalid input. Please enter a valid number.")
